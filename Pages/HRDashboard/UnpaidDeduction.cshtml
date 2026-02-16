@@ -1,0 +1,83 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.HRDashboard.UnpaidDeductionModel
+@{
+    ViewData["Title"] = "Unpaid Leaves Deduction";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title"><h2><i class="fa-solid fa-coins"></i> Calculate Unpaid Leaves Deduction</h2></div>
+
+    <form method="post" asp-page-handler="AddDeduction">
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-id-card me-1"></i> Employee ID
+            </label>
+            <input asp-for="EmployeeID" type="number" class="form-control" min="1" />
+            <span asp-validation-for="EmployeeID" class="text-danger"></span>
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div>
+                    <span class="text-success" style="font-weight:600;">
+                        @TempData["SuccessMessage"]
+                    </span>
+                </div>
+            }
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fa-solid fa-calculator"></i> Calculate Deduction
+            </button>
+        </div>
+
+    </form>
+
+    <br />
+
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">This Month's Unpaid Leaves Deductions</h2>
+    </div>
+
+    <table class="table table-bordered table-striped table-sm text-center">
+        <thead>
+            <tr>
+                <th>Deduction ID</th>
+                <th>Employee ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model.MonthlyDeductions)
+            {
+                <tr>
+                    <td>@d.DeductionID</td>
+                    <td>@d.EmployeeID</td>
+                    <td>@d.Date.ToShortDateString()</td>
+                    <td>@d.Amount</td>
+                    <td>@d.Type</td>
+                    <td>@d.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/HRDashboard/HRDashboard">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

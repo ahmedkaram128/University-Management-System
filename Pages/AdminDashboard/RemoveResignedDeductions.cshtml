@@ -1,0 +1,82 @@
+﻿@page
+@model RemoveResignedDeductionsModel
+@{
+    ViewData["Title"] = "Remove Resigned Deductions";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">Remove Resigned Employee Deductions</h2>
+    </div>
+    @if (Model.Executed)
+    {
+        <div class="alert alert-info">
+
+            @if (Model.RemovedCount > 0)
+            {
+                <span>
+                    <b>@Model.RemovedCount deductions</b> were removed successfully.
+                </span>
+            }
+            else
+            {
+                <span>No deductions to be removed.</span>
+            }
+
+
+        </div>
+    }
+
+    <table class="table table-bordered table-striped">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Deduction ID</th>
+                <th>Employee ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Deductions.Count == 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center">No deductions found</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var d in Model.Deductions)
+                {
+                    <tr>
+                        <td>@d.DeductionId</td>
+                        <td>@d.EmployeeId</td>
+                        <td>@d.Date.ToShortDateString()</td>
+                        <td>@d.Amount</td>
+                        <td>@d.Type</td>
+                        <td>@d.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <!-- remove button -->
+    <form method="post">
+        <button type="submit" class="btn btn-danger mt-3">
+            Remove All Resigned Deductions
+        </button>
+    </form>
+
+    <!-- back button -->
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>

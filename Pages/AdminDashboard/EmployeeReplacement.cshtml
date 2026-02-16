@@ -1,0 +1,113 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.EmployeeReplacementModel
+@{
+    ViewData["Title"] = "Employee Replaces Employee";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+<div class="dashboard-card">
+    <div class="dashboard-title"><h2>Add Replacement</h2></div>
+    <form method="post" asp-page-handler="AddReplacement">
+ 
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Employee Being Replaced (ID)</label>
+                <input asp-for="Emp1_ID" type="number" class="form-control" min="1" />
+                <span asp-validation-for="Emp1_ID" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Replacement Employee (ID)</label>
+                <input asp-for="Emp2_ID" type="number" class="form-control" min="1" />
+                <span asp-validation-for="Emp2_ID" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">From Date</label>
+                <input asp-for="FromDate" type="date" class="form-control" />
+                <span asp-validation-for="FromDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">To Date</label>
+                <input asp-for="ToDate" type="date" class="form-control" />
+                <span asp-validation-for="ToDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary mt-2 w-100">Add Replacement</button>
+        </div>
+
+
+    
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-success mt-2">@Model.Message</div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Error))
+    {
+        <div class="alert alert-danger mt-2">@Model.Error</div>
+    }
+
+    @if (!ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-2">
+            @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        </div>
+    }
+    <br>
+    <br>
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">Current Employee Replacements</h2>
+    </div>
+    <br>
+    <table class="table table-bordered table-striped table-sm" style="width: 100%; text-align: center;">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Employee Being Replaced</th>
+                <th>Replacement Employee</th>
+                <th>From Date</th>
+                <th>To Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Replacements.Count == 0)
+            {
+                <tr>
+                    <td colspan="4" class="text-center">
+                        No available replacements.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var r in Model.Replacements)
+                {
+                    <tr>
+                        <td>@r.Emp1_ID</td>
+                        <td>@r.Emp2_ID</td>
+                        <td>@r.FromDate.ToShortDateString()</td>
+                        <td>@r.ToDate.ToShortDateString()</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

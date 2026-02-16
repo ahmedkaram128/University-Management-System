@@ -1,0 +1,97 @@
+﻿@page
+@model AdminDashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_MinLayout"; 
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">Admin Dashboard</div>
+
+    <div class="dashboard-grid">
+        
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/EmployeeProfilesView")'">
+            <i class="fa-solid fa-id-card"></i>
+            Employee Profiles
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/EmployeesPerDept")'">
+            <i class="fa-solid fa-building-user"></i>
+            Employees per Department
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/RejectedMedical")'">
+            <i class="fa-solid fa-file-circle-xmark"></i>
+            Rejected Medical Leaves
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/RemoveResignedDeductions")'">
+            <i class="fa-solid fa-trash"></i>
+            Remove Resigned Deductions
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/UpdateAttendance")'">
+            <i class="fa-solid fa-clipboard-check"></i>
+            Update Today's Attendance
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/AddHoliday")'">
+            <i class="fa-solid fa-calendar-plus"></i>
+            Add Holiday
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/InitializeAttendance")'">
+            <i class="fa-solid fa-play"></i>
+            Initialize Attendance
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/YesterdayAttendance")'">
+            <i class="fa-solid fa-calendar-days"></i>
+            Yesterday’s Attendance
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/AllPerformance")'">
+            <i class="fa-solid fa-chart-line"></i>
+            Winter Semester Performance
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/RemoveHolidayAttendance")'">
+            <i class="fa-solid fa-broom"></i>
+            Remove Holiday Attendance
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/RemoveDayOff")'">
+            <i class="fa-solid fa-ban"></i>
+            Remove Day Off
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/RemoveApprovedLeaves")'">
+            <i class="fa-solid fa-eraser"></i>
+            Remove Approved Leaves
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/EmployeeReplacement")'">
+            <i class="fa-solid fa-user-pen"></i>
+            Replace Employee
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/AdminDashboard/UpdateEmploymentStatus")'">
+            <i class="fa-solid fa-user-check"></i>
+            Update Employment Status
+        </button>
+
+    </div>
+
+    <div class="top-bar">
+        <form method="post" asp-page-handler="Logout">
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+        </form>
+    </div>
+
+</div>

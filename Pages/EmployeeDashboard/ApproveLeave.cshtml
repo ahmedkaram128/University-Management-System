@@ -1,0 +1,172 @@
+@page
+@model University_HR_ManagementSystem.Pages.Employee.ApproveLeaveModel
+@{
+    ViewData["Title"] = "Leave Requests";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .content-card {
+        background: #ffffff;
+        width: 1100px;
+        margin: 30px auto;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0px 20px 45px rgba(0,0,0,0.10);
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .fade-in {
+        animation: fadeInAlert .4s ease-in-out;
+    }
+</style>
+
+
+<div class="content-card">
+
+    <h2 class="dashboard-title mb-4">
+        <i class="fa-solid fa-envelope-open-text"></i> Leave Requests
+    </h2>
+
+    <!-- ==================== Tabs ==================== -->
+    <div class="tab-container">
+        <form method="get">
+
+            <button type="submit" name="type" value="annual"
+                class="btn tab-btn @(Model.ActiveTab == "annual" ? "btn-primary" : "btn-outline-primary")">
+                <i class="fa-solid fa-calendar-days"></i> Annual Leave
+            </button>
+
+            <button type="submit" name="type" value="unpaid"
+                class="btn tab-btn @(Model.ActiveTab == "unpaid" ? "btn-primary" : "btn-outline-primary")">
+                <i class="fa-solid fa-money-bill-wave"></i> Unpaid Leave
+            </button>
+
+        </form>
+    </div>
+
+
+    <!-- ==================== Annual Leave ==================== -->
+    @if (Model.ActiveTab == "annual")
+    {
+        <h4 class="mb-3"><i class="fa-solid fa-calendar-check"></i> Annual Leave Requests</h4>
+
+        <table class="table table-bordered table-striped table-hover text-center">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>ID</th>
+                    <th>Requested</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Balance</th>
+                    <th>Replacement</th>
+                    <th>ID</th>
+                    <th>Status / Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.AnnualRequests)
+                {
+                    <tr>
+                        <td>@r.EmployeeName</td>
+                        <td>@r.Emp_ID</td>
+                        <td>@r.DateOfRequest</td>
+                        <td>@r.StartDate</td>
+                        <td>@r.EndDate</td>
+                        <td>@r.Balance</td>
+                        <td>@r.RepEmp_Name</td>
+                        <td>@r.RepEmp_ID</td>
+                        <td>
+                            @if (r.Status == "pending")
+                            {
+                                <form method="post" asp-page-handler="Validate" class="d-inline">
+                                    <input type="hidden" name="RequestID" value="@r.RequestID" />
+                                    <input type="hidden" name="LeaveType" value="annual" />
+                                    <input type="hidden" name="replacement_emp" value="@r.RepEmp_ID" />
+
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fa-solid fa-check"></i> Approve
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="badge @(r.Status == "approved" ? "bg-success" : "bg-danger")">
+                                    <i class="fa-solid @(r.Status == "approved" ? "fa-check-circle" : "fa-xmark")"></i>
+                                    @r.Status
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+
+
+
+    <!-- ==================== Unpaid Leave ==================== -->
+    @if (Model.ActiveTab == "unpaid")
+    {
+        <h4 class="mb-3"><i class="fa-solid fa-coins"></i> Unpaid Leave Requests</h4>
+
+        <table class="table table-bordered table-striped table-hover text-center">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>ID</th>
+                    <th>Requested</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Days</th>
+                    <th>Status / Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.UnpaidRequests)
+                {
+                    <tr>
+                        <td>@r.EmployeeName</td>
+                        <td>@r.Emp_ID</td>
+                        <td>@r.DateOfRequest</td>
+                        <td>@r.StartDate</td>
+                        <td>@r.EndDate</td>
+                        <td>@r.NumDays</td>
+
+                        <td>
+                            @if (r.Status == "pending")
+                            {
+                                <form method="post" asp-page-handler="Validate" class="d-inline">
+                                    <input type="hidden" name="RequestID" value="@r.RequestID" />
+                                    <input type="hidden" name="LeaveType" value="unpaid" />
+
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fa-solid fa-check"></i> Approve
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="badge @(r.Status == "approved" ? "bg-success" : "bg-danger")">
+                                    <i class="fa-solid @(r.Status == "approved" ? "fa-check-circle" : "fa-xmark")"></i>
+                                    @r.Status
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    <div class="mt-4">
+        <a class="btn-back" href="/EmployeeDashboard/EmployeeDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>

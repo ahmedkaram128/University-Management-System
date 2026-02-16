@@ -1,0 +1,129 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.EmployeeDashboard.AcademicEmployee.ApplyMedicalModel
+@{
+    ViewData["Title"] = "Apply Medical Leave";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    /* Overrides for smaller design */
+    .content-card {
+        width: 650px;
+        padding: 25px;
+    }
+
+    .form-section {
+        margin-bottom: 18px;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 60px;
+    }
+</style>
+
+<div class="content-card">
+
+    <h2 class="dashboard-title">
+        <i class="fa-solid fa-kit-medical"></i> Medical Leave
+    </h2>
+
+    <!-- Alerts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success fade-in text-center fw-semibold">
+            <i class="fa-solid fa-circle-check me-2"></i>@TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger fade-in text-center fw-semibold">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>@TempData["Error"]
+        </div>
+    }
+
+    <form method="post">
+
+        <!-- Dates -->
+        <div class="row g-3 form-section">
+            <div class="col">
+                <label class="form-label fw-semibold">
+                    <i class="fa-solid fa-calendar-day me-1"></i> Start
+                </label>
+                <input type="date" asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger small"></span>
+            </div>
+
+            <div class="col">
+                <label class="form-label fw-semibold">
+                    <i class="fa-solid fa-calendar-check me-1"></i> End
+                </label>
+                <input type="date" asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <!-- Type & Insurance -->
+        <div class="row g-3 form-section">
+            <div class="col">
+                <label class="form-label fw-semibold">
+                    <i class="fa-solid fa-file-medical me-1"></i> Type
+                </label>
+                <select asp-for="Type" class="form-select">
+                    <option value="sick">Sick Leave</option>
+                    <option value="maternity">Maternity</option>
+                </select>
+            </div>
+
+            <div class="col d-flex align-items-end">
+                <div class="form-check ms-2">
+                    <input class="form-check-input" type="checkbox" asp-for="InsuranceStatus" />
+                    <label class="form-check-label fw-semibold">
+                        Insurance?
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional disability -->
+        <div class="form-section">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-notes-medical me-1"></i> Disability (Optional)
+            </label>
+            <textarea asp-for="DisabilityDetails" class="form-control"></textarea>
+        </div>
+
+        <!-- Document -->
+        <div class="form-section">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-tag me-1"></i> Document Description*
+            </label>
+            <input type="text" asp-for="DocumentDescription" class="form-control"
+                   placeholder="e.g. Broken leg report" />
+        </div>
+
+        <div class="form-section">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-file me-1"></i> File Name*
+            </label>
+            <input type="text" asp-for="FileName" class="form-control"
+                   placeholder="e.g. my_report.pdf" />
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-2 mt-4">
+            <button class="btn btn-danger fw-bold">
+                <i class="fa-solid fa-paper-plane me-2"></i> Submit Request
+            </button>
+
+            <a asp-page="/EmployeeDashboard/ApplyLeave" class="btn-back">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back
+            </a>
+        </div>
+
+    </form>
+</div>

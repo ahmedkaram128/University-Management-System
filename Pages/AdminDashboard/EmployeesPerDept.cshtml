@@ -1,0 +1,53 @@
+@page
+@model EmployeesPerDeptModel
+@{
+    ViewData["Title"] = "Employees Per Department";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mt-4 mb-4">Employees Per Department</h2>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+
+    <table class="table table-bordered table-striped">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Department</th>
+                <th>No. of Employees</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tbody>
+            @if (Model.Departments.Count == 0)
+            {
+                <tr>
+                    <td colspan="2" class="text-center">
+                        No available records.
+                    </td>
+                    </tr>
+            }
+            else
+            {
+                @foreach (var row in Model.Departments)
+                {
+                    <tr>
+                        <td>@row.Department</td>
+                        <td>@row.NumberOfEmployees</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+

@@ -1,0 +1,88 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.EmployeeDashboard.AcademicEmployee.ApplyCompensationModel
+@{
+    ViewData["Title"] = "Apply Compensation Leave";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="content-card">
+
+    <h2 class="dashboard-title">
+        <i class="fa-solid fa-repeat"></i> Apply Compensation Leave
+    </h2>
+
+    <!-- Alert Messages -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success fade-in text-center fw-semibold">
+            <i class="fa-solid fa-circle-check me-2"></i>@TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger fade-in text-center fw-semibold">
+            <i class="fa-solid fa-circle-xmark me-2"></i>@TempData["Error"]
+        </div>
+    }
+
+    <form method="post" class="leave-form">
+
+        <!-- Dates -->
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-calendar-day me-1"></i> Compensation Date (Day Off)
+                </label>
+                <input type="date" asp-for="CompensationDate" class="form-control form-control-lg" />
+                <span asp-validation-for="CompensationDate" class="text-danger small"></span>
+                <small class="text-muted">This is the day you want off.</small>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-calendar-check me-1"></i> Original Work Day
+                </label>
+                <input type="date" asp-for="OriginalDate" class="form-control form-control-lg" />
+                <span asp-validation-for="OriginalDate" class="text-danger small"></span>
+                <small class="text-muted">The day you worked extra (e.g. 6/7/2067).</small>
+            </div>
+        </div>
+
+        <!-- Reason -->
+        <div class="mt-4">
+            <label class="form-label fw-bold">
+                <i class="fa-solid fa-align-left me-1"></i> Reason
+            </label>
+            <input asp-for="Reason" type="text" class="form-control form-control-lg"
+                    />
+            <span asp-validation-for="Reason" class="text-danger small"></span>
+        </div>
+
+        <!-- Replacement -->
+        <div class="mt-4">
+            <label class="form-label fw-bold">
+                <i class="fa-solid fa-user-gear me-1"></i> Replacement Employee ID
+            </label>
+            <input type="number" asp-for="ReplacementId" class="form-control form-control-lg"
+                   placeholder="Enter employee ID covering your duties" />
+            <span asp-validation-for="ReplacementId" class="text-danger small"></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-3 mt-5">
+            <button type="submit" class="btn btn-info text-white fw-bold py-3">
+                <i class="fa-solid fa-paper-plane me-2"></i> Submit Request
+            </button>
+
+            <a asp-page="/EmployeeDashboard/ApplyLeave" class="btn-back">
+                <i class="fa-solid fa-chevron-left me-2"></i> Back to Leave Portal
+            </a>
+        </div>
+
+    </form>
+
+</div>

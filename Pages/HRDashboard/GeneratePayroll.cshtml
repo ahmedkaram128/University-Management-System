@@ -1,0 +1,95 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.HRDashboard.GeneratePayrollModel
+@{
+    ViewData["Title"] = "Generate Monthly Payroll";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title"><h2><i class="fa-solid fa-file-invoice-dollar"></i> Generate Monthly Payroll</h2></div>
+
+    <form method="post" asp-page-handler="Generate">
+        <div class="mb-3">
+            <label class="form-label fw-semibold"><i class="fa-solid fa-id-card me-1"></i> Employee ID</label>
+            <input asp-for="EmployeeID" type="number" class="form-control" min="1" />
+            <span asp-validation-for="EmployeeID" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 d-flex gap-2">
+            <div class="flex-fill">
+                <label class="form-label fw-semibold"><i class="fa-regular fa-calendar me-1"></i> Month</label>
+                <input asp-for="Month" type="number" class="form-control" min="1" max="12" placeholder="MM" />
+                <span asp-validation-for="Month" class="text-danger"></span>
+            </div>
+            <div class="flex-fill">
+                <label class="form-label fw-semibold"><i class="fa-regular fa-calendar me-1"></i>Year</label>
+                <input asp-for="Year" type="number" class="form-control" min="1900" max="2100" placeholder="YYYY" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fa-solid fa-calculator me-1"></i> Calculate Payroll
+            </button>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert @Model.MessageCss mt-3">@Model.Message</div>
+    }
+
+    <br />
+
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">This Month's Payrolls</h2>
+    </div>
+
+    <table class="table table-bordered table-striped table-sm text-center">
+        <thead>
+            <tr>
+                <th>Payroll ID</th>
+                <th>Employee ID</th>
+                <th>Payment Date</th>
+                <th>From Date</th>      
+                <th>To Date</th>       
+                <th>Final Salary</th>
+                <th>Bonus</th>
+                <th>Deductions</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.MonthlyPayrolls)
+            {
+                <tr>
+                    <td>@p.PayrollID</td>
+                    <td>@p.EmployeeID</td>
+                    <td>@p.PaymentDate.ToShortDateString()</td>
+                    <td>@p.FromDate.ToShortDateString()</td>   <!-- New Column -->
+                    <td>@p.ToDate.ToShortDateString()</td>     <!-- New Column -->
+                    <td>@p.FinalSalaryAmount</td>
+                    <td>@p.BonusAmount</td>
+                    <td>@p.DeductionsAmount</td>
+                    <td>@p.Comments</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <div class="mt-4">
+        <a class="btn-back" href="/HRDashboard/HRDashboard">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,116 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.UpdateAttendanceModel
+@{
+    ViewData["Title"] = "Remove Attendance";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">Update Attendance</h2>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success">
+            @Model.SuccessMessage
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @* 
+        <label>Employee ID</label>
+        <input asp-for="EmployeeId" class="form-control" />
+
+        <label>Check In</label>
+        <input asp-for="CheckIn" type="time" class="form-control" />
+
+        <label>Check Out</label>
+        <input asp-for="CheckOut" type="time" class="form-control" />
+
+        <button type="submit" class="btn btn-primary mt-3">Update Attendance</button>
+    </form> *@
+    <form method="post">
+        <div class="row">
+            <div class="mb-3">
+                <label asp-for="EmployeeId" class="form-label fw-bold">Employee ID</label>
+                <input asp-for="EmployeeId" class="form-control" min="1"/>
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="CheckIn" class="form-label fw-bold">Check In</label>
+                <input asp-for="CheckIn" type="time" class="form-control" />
+                <span asp-validation-for="CheckIn" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="CheckOut" class="form-label fw-bold">Check Out</label>
+                <input asp-for="CheckOut" type="time" class="form-control" />
+                <span asp-validation-for="CheckOut" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary mt-2 w-100">
+                Update Attendance
+            </button>
+        </div>
+    </form>
+
+    <br>
+    <div class="dashboard-title">
+        <h2>Today's Attendance</h2>
+    </div>
+    <table class="table table-bordered table-striped table-sm" style="width: 100%; text-align: center;">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Employee ID</th>
+                <th>Date</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.todayAttendance.Count == 0)
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        No attendance records for today.
+                    </td>
+                </tr>
+            }
+            else{
+                @foreach (var row in Model.todayAttendance)
+                {
+                    <tr>
+                        <td>@row.EmployeeId</td>
+                        <td>@(row.Date.ToShortDateString()?.ToString() ?? "-")</td>
+                        <td>@(row.CheckInTime?.ToString(@"hh\:mm") ?? "-")</td>
+                        <td>@(row.CheckOutTime?.ToString(@"hh\:mm") ?? "-")</td>
+                        <td>@row.Status</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@page
+@model ManageUnpaidModel
+@{
+    ViewData["Title"] = "Manage Unpaid Leave Requests";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">
+        <h2><i class="fa-solid fa-receipt"></i> Manage Unpaid Leave Requests</h2>
+    </div>
+
+    <form method="post">
+
+        <!-- Dropdown -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-list me-1"></i> Select Unpaid Leave Request
+            </label>
+
+            <select asp-for="SelectedRequestID" asp-items="Model.UnpaidLeaves" class="form-select">
+                <option value="">-- select a request --</option>
+            </select>
+
+            <!-- Message directly under dropdown -->
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="mt-2">
+                    <span class="@Model.MessageCss" style="font-weight:600;">
+                        @Model.Message
+                    </span>
+                </div>
+            }
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-2 mt-3">
+
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fa-solid fa-gears me-1"></i> Process Leave Request
+            </button>
+
+            <!-- Back button not full width -->
+            <div class="d-flex justify-content-center mt-2">
+                <a class="btn-back" style="width:fit-content;" href="/HRDashboard/HRDashboard">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

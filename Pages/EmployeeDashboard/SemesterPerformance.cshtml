@@ -1,0 +1,76 @@
+@page
+@model University_HR_ManagementSystem.Pages.Employee.SemesterPerformanceModel
+@{
+    ViewData["Title"] = "Semester Performance";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+
+<div class="content-card">
+
+    <h2 class="dashboard-title">Semester Performance</h2>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <i class="fa-solid fa-triangle-exclamation"></i> @Model.ErrorMessage
+        </div>
+    }
+
+    <form method="post" class="mb-4">
+        <div class="row justify-content-center g-3">
+
+        <div class="col-md-5 custom-select-wrapper">
+            <select asp-for="SelectedSemester"
+                    asp-items="Model.Semesters"
+                    class="custom-select">
+                <option value="">-- Select Semester --</option>
+            </select>
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-chart-line"></i> View Performance
+                </button>
+            </div>
+
+        </div>
+    </form>
+
+    @if (Model.Performances != null && Model.Performances.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>Semester</th>
+                        <th>Rating</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var row in Model.Performances)
+                    {
+                        <tr>
+                            <td>@row.Semester</td>
+                            <td>@row.Rating</td>
+                            <td>@row.Comments</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="mt-4">
+        <a class="btn-back" href="/EmployeeDashboard/EmployeeDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>

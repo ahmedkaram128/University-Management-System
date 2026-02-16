@@ -1,0 +1,62 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.InitializeAttendanceModel
+@{
+    ViewData["Title"] = "Initialize Attendance";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 style="text-align:center;">Today's Attendance</h2>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-success">@Model.Message</div>
+    }
+
+    <form method="post" asp-page-handler="Initiate">
+        <button class="btn btn-primary mb-3">Initiate Today's Attendance</button>
+    </form>
+
+    <table class="table table-bordered table-striped table-sm" style="width: 100%; text-align: center;">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Employee ID</th>
+                <th>Date</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.todayAttendance.Count == 0)
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        No attendance records for today.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var row in Model.todayAttendance)
+                {
+                    <tr>
+                        <td>@row.EmployeeId</td>
+                        <td>@(row.Date.ToShortDateString()?.ToString() ?? "-")</td>
+                        <td>@(row.CheckInTime?.ToString(@"hh\:mm") ?? "-")</td>
+                        <td>@(row.CheckOutTime?.ToString(@"hh\:mm") ?? "-")</td>
+                        <td>@row.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>

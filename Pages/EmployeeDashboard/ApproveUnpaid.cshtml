@@ -1,0 +1,39 @@
+﻿@page "/ApproveUnpaid"
+@model University_HR_ManagementSystem.Pages.EmployeeDashboard.AcademicEmployee.ApproveUnpaidModel
+@{
+    ViewData["Title"] = "Approve Unpaid Leave";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-dark">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0"> Approve Unpaid Leave</h4>
+        </div>
+        <div class="card-body">
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Request ID</label>
+                    <input type="number" asp-for="RequestId" class="form-control" placeholder="Enter the Leave Request ID" required />
+                    <span asp-validation-for="RequestId" class="text-danger"></span>
+                    <small class="text-muted">Enter the ID of the request you want to approve/reject.</small>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-dark fw-bold">Process Request</button>
+                    <a asp-page="/Leaves" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

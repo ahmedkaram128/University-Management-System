@@ -1,0 +1,79 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.UpdateEmploymentStatusModel
+@{
+    ViewData["Title"] = "Update Employment Status";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .status-form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .status-label {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .status-input {
+        height: 48px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+
+    .status-update-btn {
+        height: 48px;
+        padding: 0 30px;
+        font-size: 1rem;
+        border-radius: 8px;
+        white-space: nowrap;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 20px;
+    }
+</style>
+
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">Update Employment Status</h2>
+    </div>
+
+    @if (Model.Executed)
+    {
+        <div class="alert @(Model.Success ? "alert-info" : "alert-danger")">
+            @Html.Raw(Model.Message)
+        </div>
+    }
+
+    <div class="status-form-container">
+
+        <form method="get" class="d-flex flex-column align-items-center">
+
+            <label class="status-label">Please Enter Employee ID</label>
+
+            <input type="number"
+                   name="employeeId"
+                   value="@Model.EmployeeId"
+                   class="form-control status-input mb-3"
+                   style="max-width: 350px;" />
+
+            <button type="submit" class="btn btn-primary status-update-btn">
+                Update
+            </button>
+
+        </form>
+
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+    </div>
+</div>

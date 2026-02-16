@@ -1,0 +1,77 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.RemoveHolidayAttendanceModel
+@{
+    ViewData["Title"] = "Remove Holiday Attendance";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">Remove Holiday Attendance</h2>
+    </div>
+    @if (Model.Executed)
+    {
+        <div class="alert alert-info">
+            @if (Model.RemovedCount > 0)
+            {
+                <span><b>@Model.RemovedCount</b> attendance records were removed successfully.</span>
+            }
+            else
+            {
+                <span>No holiday attendance records to remove.</span>
+            }
+        </div>
+    }
+
+    <table class="table table-bordered table-striped">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Attendance ID</th>
+                <th>Employee ID</th>
+                <th>Date</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Total Duration</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.Records.Count == 0)
+            {
+                <tr>
+                    <td colspan="7" class="text-center">No holiday attendance found</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var r in Model.Records)
+                {
+                    <tr>
+                        <td>@r.AttendanceId</td>
+                        <td>@r.EmployeeId</td>
+                        <td>@r.Date.ToShortDateString()</td>
+                        <td>@(r.CheckInTime?.ToString() ?? "-")</td>
+                        <td>@(r.CheckOutTime?.ToString() ?? "-")</td>
+                        <td>@(r.TotalDuration?.ToString() ?? "-")</td>
+                        <td>@r.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <form method="post">
+        <button type="submit" class="btn btn-danger mt-3">
+            Remove All Holiday Attendance
+        </button>
+    </form>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+@page
+@model University_HR_ManagementSystem.Pages.Employee.DeductionsAttendance
+@{
+    ViewData["Title"] = "Attendance Deductions";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .content-card {
+        background: #ffffff;
+        width: 950px;
+        margin: 40px auto;
+        padding: 35px;
+        border-radius: 22px;
+        box-shadow: 0px 18px 40px rgba(0,0,0,0.10);
+        animation: fadeIn 0.4s ease-out;
+        text-align: center;
+    }
+
+    .month-select {
+        width: 260px;
+        margin: auto;
+        text-align: center;
+    }
+
+    .info-box {
+        padding: 18px;
+        background: #eef7ff;
+        border-left: 5px solid #007bff;
+        width: 60%;
+        margin: 20px auto;
+        border-radius: 10px;
+        color: #05518e;
+        font-size: 16px;
+    }
+</style>
+
+
+<div class="content-card">
+
+    <h2 class="dashboard-title mb-4">
+        <i class="fa-solid fa-circle-minus"></i> Attendance Deductions
+    </h2>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger fade-in">@Model.ErrorMessage</div>
+    }
+
+    <!-- ==================== Select Month ==================== -->
+    <form method="post" class="d-flex justify-content-center align-items-center gap-3 mb-4">
+
+        <select asp-for="Month" asp-items="Model.Months" class="form-select month-select">
+            <option value="">📅 Select a Month</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass"></i> View
+        </button>
+
+    </form>
+
+
+    <!-- ==================== Results Handling ==================== -->
+
+    @if (Model.Month == 0)
+    {
+        <div class="info-box">
+            <i class="fa-solid fa-info-circle"></i> Please select a month to view deductions.
+        </div>
+    }
+    else if (Model.Deductions.Any())
+    {
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-striped table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Attendance Day</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in Model.Deductions)
+                    {
+                        <tr>
+                            <td>@row.Date</td>
+                            <td>$@row.Amount</td>
+                            <td>@row.Type</td>
+                            <td>
+                                <span class="badge @(row.Status.ToLower() == "finalized" ? "bg-danger" : "bg-warning")">
+                                    @row.Status
+                                </span>
+                            </td>
+                            <td>@row.DateOfAttendance</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="info-box">
+            <i class="fa-solid fa-circle-check"></i> No deductions for this month
+        </div>
+    }
+
+    <a class="btn-back mt-4" href="/EmployeeDashboard/EmployeeDashboard">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+</div>

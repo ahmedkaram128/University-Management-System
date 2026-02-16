@@ -1,0 +1,118 @@
+﻿@page
+@model EmployeeProfilesViewModel
+@{
+    ViewData["Title"] = "EmployeeView";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .dashboard-card {
+        width: 95%;
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .fullwidth-table-container {
+        width: 100%;
+        overflow-x: visible;
+    }
+
+        .fullwidth-table-container table {
+            width: 100%;
+            min-width: 1400px;
+        }
+</style>
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mt-4 mb-4">All Employees</h2>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+
+    <div class="d-flex justify-content-center">
+        <div class="fullwidth-table-container" style="width:fit-content">
+            <table class="table table-bordered table-striped table-sm text-center align-middle">
+                <thead class="table text-center align-middle">
+                    <tr>
+                        <th>EmployeeID</th>
+                        <th>Full Name</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Years of Experience</th>
+                        <th>Official Day Off</th>
+                        <th>Type of Contract</th>
+                        <th>Employment Status</th>
+                        <th>Annual Balance</th>
+                        <th>Accidental Balance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.profileTable.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="12" class="text-center">
+                                No available employee records.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var row in Model.profileTable)
+                        {
+                            var type = row.Type_of_contract?.ToLower();
+                            var displayType = type switch
+                            {
+                                "full_time" => "Full Time",
+                                "part_time" => "Part Time",
+                                _ => row.Type_of_contract ?? "-"
+                            };
+
+                            var status = row.Employment_status?.ToLower();
+                            var displayStatus = status switch
+                            {
+                                "active" => "Active",
+                                "resigned" => "Resigned",
+                                "onleave" => "On-Leave",
+                                "notice_period" => "Notice Period",
+                                _ => row.Employment_status ?? "-"
+                            };
+
+                            <tr>
+                                <td>@row.EmployeeID</td>
+
+                                <td>@($"{row.First_name} {row.Last_name}")</td>
+
+                                <td>@(row.Gender == 'M' ? "Male" : "Female")</td>
+
+                                <td>@(row.Email ?? "-")</td>
+                                <td>@(row.Address ?? "-")</td>
+                                <td>@(row.Years_of_experience?.ToString() ?? "-")</td>
+                                <td>@(row.Official_day_off ?? "-")</td>
+
+                                <td>@displayType</td>
+                                <td>@displayStatus</td>
+
+                                <td>@(row.Annual_balance?.ToString() ?? "-")</td>
+                                <td>@(row.Accidental_balance?.ToString() ?? "-")</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>

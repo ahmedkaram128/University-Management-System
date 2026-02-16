@@ -1,0 +1,75 @@
+﻿@page
+@model HRDashboardModel
+@{
+    ViewData["Title"] = "HR Dashboard";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">HR Dashboard</div>
+
+    <div class="dashboard-grid">
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/ManageAnnual")'">
+            <i class="fa-solid fa-calendar-days"></i>
+            Manage Annual Leaves
+        </button>
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/ManageAccidental")'">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Manage Accidental Leaves
+        </button>
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/ManageUnpaid")'">
+            <i class="fa-solid fa-receipt"></i>
+            Manage Unpaid Leaves
+        </button>
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/ManageCompensation")'">
+            <i class="fa-solid fa-hand-holding-medical"></i>
+            Manage Compensation Leaves
+        </button>
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/MissingHours")'">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            Deduct Missing Hours
+        </button>
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/MissingDays")'">
+            <i class="fa-solid fa-calendar-xmark"></i>
+            Deduct Missing Days
+        </button>
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/UnpaidDeduction")'">
+            <i class="fa-solid fa-coins"></i>
+            Deduct Unpaid Leave
+        </button>
+
+        <button class="dashboard-button"
+            onclick="location.href='@Url.Page("/HRDashboard/GeneratePayroll")'">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            Generate Payroll
+        </button>
+
+    </div>
+
+    <div class="top-bar">
+        <form method="post" asp-page-handler="Logout">
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>Logout
+            </button>
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,133 @@
+@page
+@model University_HR_ManagementSystem.Pages.Employee.CurrentMonthAttendanceModel
+@{
+    ViewData["Title"] = "Attendance";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .content-card {
+        width: 1000px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0px 20px 45px rgba(0,0,0,0.10);
+        animation: fadeIn 0.6s ease-out;
+        text-align: center;
+    }
+
+    table {
+        border-radius: 12px;
+        overflow: hidden;
+        font-size: 16px;
+    }
+
+    .table thead {
+        background: #0d6efd !important;
+        color: white;
+    }
+
+    .btn-back {
+        background: #6c757d;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.25s ease;
+        margin-top: 20px;
+    }
+
+    .btn-back:hover {
+        background: #555;
+        transform: translateY(-3px);
+        box-shadow: 0px 10px 22px rgba(0,0,0,0.15);
+    }
+
+    .alert {
+        width: 100%;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        font-size: 18px;
+    }
+    .empty-row {
+        font-size: 18px;
+        color: #6c757d;
+        padding: 20px;
+        font-weight: 500;
+    }
+
+    .empty-row i {
+        color: #0d6efd;
+        margin-right: 6px;
+    }
+
+</style>
+
+
+
+<div class="content-card">
+
+    <h2 class="dashboard-title mb-4">
+        <i class="fa-solid fa-user-check"></i> Attendance Overview
+    </h2>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger text-center fade-in">
+            <i class="fa-solid fa-triangle-exclamation"></i> @Model.ErrorMessage
+        </div>
+    }
+
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+                <tbody>
+                    @if (Model.Attendances == null || !Model.Attendances.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center empty-row">
+                                <i class="fa-solid fa-calendar-xmark"></i> No attendance records found this month.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var row in Model.Attendances)
+                        {
+                            <tr>
+                                <td>@row.Date</td>
+                                <td>@row.CheckInTime</td>
+                                <td>@row.CheckOutTime</td>
+                                <td>@row.Duration</td>
+                                <td>
+                                    <span class="badge @(row.Status == "attended" ? "bg-success" : "bg-danger")">
+                                        @row.Status
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+        </table>
+    </div>
+
+    <a asp-page="/EmployeeDashboard/EmployeeDashboard" class="btn-back">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+</div>

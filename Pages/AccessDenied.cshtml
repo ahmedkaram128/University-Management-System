@@ -1,0 +1,153 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AccessDeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+}
+@{
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+        background: #ffffff;
+        padding: 30px;
+        margin: 0;
+    }
+
+    .warning-box {
+        background: #ffe6e6;
+        border-left: 6px solid #ff0000;
+        padding: 20px;
+        width: 60%;
+        margin: 30px auto;
+        border-radius: 12px;
+        box-shadow: 0px 8px 18px rgba(0,0,0,0.1);
+    }
+
+    .warning-box h1 {
+        font-size: 48px;
+        color: #ff0000;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .warning-box i {
+        font-size: 55px;
+        color: #ff0000;
+    }
+
+    .warning-text {
+        font-size: 20px;
+        margin-top: 10px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .gif-container {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;  
+        align-items: center;      
+        gap: 30px;              
+        flex-wrap: wrap;          
+        width: 100%;
+    }
+
+    .gif-container img {
+        border-radius: 12px;
+        width: 350px;    
+        height: 300px;   
+        object-fit: cover;
+        box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+        transition: 0.2s;
+    }
+
+    .gif-container img:hover {
+        transform: scale(1);
+    }
+
+    .audio-buttons {
+        margin-top: 40px;
+    }
+
+    .audio-btn {
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+        padding: 15px 60px;
+        margin: 15px;
+        font-size: 18px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.25s ease;
+        font-weight: bold;
+    }
+
+    .audio-btn:hover {
+        background-color: #084dbf;
+        transform: translateY(-4px);
+        box-shadow: 0px 10px 22px rgba(13, 110, 253, 0.25);
+    }
+
+    .audio-btn:active {
+        transform: scale(0.97);
+    }
+
+    .return-btn {
+        margin-top: 50px;
+        display: inline-block;
+        background-color: #222;
+        color: white;
+        padding: 14px 40px;
+        border-radius: 10px;
+        font-size: 18px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .return-btn:hover {
+        background-color: #444;
+        transform: scale(1.05);
+    }
+
+</style>
+
+<div class="warning-box">
+    <i class="fa-solid fa-ban"></i>
+    <h1>Access Denied</h1>
+    <p class="warning-text">🚨 HALT, MALICIOUS USER ALERT 🚨</p>
+    <p>Where do you think you're going BUSTER🤨</p>
+</div>
+
+<div class="gif-container">
+    <img src="https://media1.tenor.com/m/fjk1rI5fZxYAAAAd/siren-borzoi-siren-dog.gif">
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExczJxY2Zkc2NiOGNiMGl3OXZwem1pYTlkNDdld3cwdXg5a3YxcDk1eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nnPI4XG0DI73q/giphy.gif">
+</div>
+
+<div class="audio-buttons">
+    <button class="audio-btn" onclick="playAudio('/Videos/KSI-Thick-Of-It.mp3')">Mystery Button 1</button>
+    <button class="audio-btn" onclick="playAudio('/Videos/67-kid.mp3')">Mystery Button 2</button>
+    <button class="audio-btn" onclick="playAudio('/Videos/lebron-lebron.mp3')">Mystery Button 3</button>
+</div>
+
+<a class="return-btn" href="@Model.ReturnUrl">⬅ Return</a>
+
+<script>
+    let currentAudio = null;
+
+    function playAudio(path) {
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        }
+        currentAudio = new Audio(path);
+        currentAudio.play();
+    }
+</script>

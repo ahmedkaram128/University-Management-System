@@ -1,0 +1,161 @@
+﻿@page "/EvaluateEmployee"
+@model University_HR_ManagementSystem.Pages.EmployeeDashboard.AcademicEmployee.EvaluateEmployeeModel
+@{
+    ViewData["Title"] = "Evaluate Employee";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="~/css/dashboard.css"/>
+
+<style>
+    .content-card {
+        width: 600px;
+        padding: 30px;
+    }
+
+    .rating-container i {
+        transition: color .2s ease, transform .2s ease;
+    }
+
+    .rating-container i.active {
+        color: #f4b400;
+        transform: scale(1.15);
+    }
+
+    .rating-container {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        font-size: 32px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        color: #cfcfcf;
+        transition: .2s;
+    }
+
+    .rating-container i:hover,
+    .rating-container i.active {
+        color: #f4b400;
+        transform: scale(1.2);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 70px;
+    }
+</style>
+
+
+<div class="content-card">
+
+    <h2 class="dashboard-title">
+        <i class="fa-solid fa-user-check"></i> Evaluate Employee
+    </h2>
+
+    <!-- Alerts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success fade-in text-center fw-semibold">
+            <i class="fa-solid fa-circle-check me-2"></i>@TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger fade-in text-center fw-semibold">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>@TempData["Error"]
+        </div>
+    }
+
+    <form method="post">
+
+        <!-- Employee ID -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-id-card me-1"></i> Employee ID
+            </label>
+            <input type="number" asp-for="TargetEmployeeId" class="form-control form-control-lg" placeholder="Enter employee ID" required />
+        </div>
+
+        <!-- Rating Scale -->
+        <div class="mb-2">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-star me-1"></i> Rating
+            </label>
+        </div>
+
+        <div class="rating-container" id="ratingStars">
+            <i class="fa-solid fa-star" data-value="1"></i>
+            <i class="fa-solid fa-star" data-value="2"></i>
+            <i class="fa-solid fa-star" data-value="3"></i>
+            <i class="fa-solid fa-star" data-value="4"></i>
+            <i class="fa-solid fa-star" data-value="5"></i>
+        </div>
+
+        <input type="hidden" asp-for="Rating" id="ratingValue" />
+
+        <span asp-validation-for="Rating" class="text-danger"></span>
+
+        <!-- Semester -->
+        <div class="mt-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-calendar me-1"></i> Semester
+            </label>
+            <input asp-for="Semester" type="text" class="form-control form-control-lg" placeholder="e.g. W23" required />
+        </div>
+
+        <!-- Comments -->
+        <div class="mt-3">
+            <label class="form-label fw-semibold">
+                <i class="fa-solid fa-comment-dots me-1"></i> Comments
+            </label>
+            <textarea asp-for="Comment" class="form-control" rows="3" placeholder="Write a comment (if any)"></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary fw-bold py-3">
+                <i class="fa-solid fa-paper-plane me-2"></i> Submit Evaluation
+            </button>
+
+            <a asp-page="/EmployeeDashboard/EmployeeDashboard" class="btn-back">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </form>
+</div>
+
+
+<script>
+const stars = document.querySelectorAll("#ratingStars i");
+const valueInput = document.getElementById("ratingValue");
+
+let savedRating = 0;
+
+stars.forEach((star, index) => {
+    star.addEventListener("mouseover", () => {
+        highlightStars(index + 1);
+    });
+
+    star.addEventListener("mouseout", () => {
+        highlightStars(savedRating);
+    });
+
+    star.addEventListener("click", () => {
+        savedRating = index + 1;
+        valueInput.value = savedRating;
+        highlightStars(savedRating);
+    });
+});
+
+function highlightStars(count) {
+    stars.forEach((s, i) => {
+        if (i < count) {
+            s.classList.add("active");
+        } else {
+            s.classList.remove("active");
+        }
+    });
+}
+</script>

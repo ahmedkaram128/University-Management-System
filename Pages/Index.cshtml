@@ -1,0 +1,138 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.IndexModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .main-card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0px 20px 40px rgba(0,0,0,0.12);
+            width: 850px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #0d6efd;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 45px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .card-btn {
+            width: 240px;
+            height: 240px;
+            background: #f9f9f9;
+            border-radius: 18px;
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 600;
+            color: #0d6efd;
+            transition: 0.25s;
+        }
+
+        .card-btn i {
+            font-size: 70px;
+            margin-bottom: 15px;
+            color: #0d6efd;
+        }
+
+        .card-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 12px 28px rgba(0,0,0,0.15);
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        footer a {
+            color: #0d6efd;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-card">
+
+        <h1>Welcome</h1>
+        <div class="subtitle">Select your login role to continue:</div>
+
+        <div class="btn-container">
+            <a href="/LoginEmployee" class="card-btn">
+                <i class="fas fa-id-card"></i>
+                Employee
+            </a>
+
+            <a href="/LoginHR" class="card-btn">
+                <i class="fas fa-briefcase"></i>
+                HR
+            </a>
+
+            <a href="/LoginAdmin" class="card-btn">
+                <i class="fas fa-user-shield"></i>
+                Admin
+            </a>
+        </div>
+
+        <footer>
+            By using this system you agree to our 
+            <a href="/Privacy">Privacy Policy</a>.
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.RemoveDayOffModel
+@{
+    ViewData["Title"] = "Remove Day Off";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .remove-form-container {
+        max-width: 450px;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .remove-label {
+        font-weight: 600;
+        font-size: 1.15rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .remove-input {
+        height: 46px;
+        font-size: 1rem;
+        border-radius: 10px;
+        max-width: 320px;
+        margin: 0 auto 15px auto;
+    }
+
+    .remove-rounded-btn {
+        border-radius: 12px !important;
+        padding: 10px 26px;
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+
+    .dashboard-title h2 {
+        margin-bottom: 20px !important;
+    }
+</style>
+
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">
+        <h2 class="text-center">Remove Employee Day Off Attendance</h2>
+    </div>
+
+    <div class="remove-form-container">
+
+        <form method="post" class="d-flex flex-column align-items-center">
+
+            <label class="remove-label">Please Enter Employee ID</label>
+
+            <input asp-for="EmployeeId"
+                   class="form-control remove-input"
+                   placeholder="Enter Employee ID..." />
+
+            <button class="btn btn-danger remove-rounded-btn">
+                Remove Day-Off
+            </button>
+
+        </form>
+    </div>
+
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-success mt-4 text-center">
+            @Model.Message
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Warning))
+    {
+        <div class="alert alert-warning mt-4 text-center">
+            @Model.Warning
+        </div>
+    }
+
+
+    @if (Model.removedList.Count > 0)
+    {
+        <div class="dashboard-title mt-4">
+            <h2 class="text-center">Removed Attendance Records</h2>
+        </div>
+
+        <table class="table table-bordered table-striped table-sm mt-3" style="width: 100%; text-align: center;">
+            <thead class="table text-center align-middle">
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Date</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var row in Model.removedList)
+                {
+                    <tr>
+                        <td>@row.EmployeeId</td>
+                        <td>@row.Date.ToShortDateString()</td>
+                        <td>@(row.CheckInTime?.ToString(@"hh\:mm") ?? "-")</td>
+                        <td>@(row.CheckOutTime?.ToString(@"hh\:mm") ?? "-")</td>
+                        <td>@row.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="text-center mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>

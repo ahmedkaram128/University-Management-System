@@ -1,0 +1,151 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.RemoveApprovedLeavesModel
+@{
+    ViewData["Title"] = "Remove Approved Leaves";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .remove-form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .remove-label {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .remove-input {
+        height: 48px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+
+    .remove-button {
+        height: 48px;
+        padding: 0 30px;
+        font-size: 1rem;
+        border-radius: 8px;
+        white-space: nowrap;
+        margin-top: 12px; 
+    }
+
+    .remove-rounded-btn {
+        border-radius: 12px !important;
+        padding: 10px 24px;
+        font-size: 1rem;
+        margin-top: 20px; 
+    }
+
+    .bottom-back-btn {
+        margin-top: 30px; 
+    }
+</style>
+
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">Remove Approved Leaves</h2>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+
+    @if (Model.Executed)
+    {
+        <div class="alert alert-info">
+            @if (Model.RemovedCount > 0)
+            {
+                <span><b>@Model.RemovedCount</b> attendance records were removed successfully.</span>
+            }
+            else
+            {
+                <span>No approved leave attendance records were found to remove.</span>
+            }
+        </div>
+    }
+
+    <div class="remove-form-container">
+
+        <form method="get" class="d-flex flex-column align-items-center">
+
+            <label class="remove-label">Please Enter Employee ID</label>
+
+            <input type="number"
+                   name="employeeId"
+                   value="@Model.EmployeeId"
+                   class="form-control remove-input mb-3"
+                   placeholder="Enter Employee ID..."
+                   style="max-width: 350px;" />
+
+            <button type="submit" class="btn btn-primary remove-button">
+                Load Records
+            </button>
+
+        </form>
+    </div>
+
+
+    @if (Model.RecordsLoaded)
+    {
+        <h4 class="text-center mt-5 mb-3">
+            @* extra margin *@
+            Approved Leaves for <b>@Model.EmployeeName</b>
+            | Employee ID: <b>@Model.EmployeeId</b>
+        </h4>
+
+        <table class="table table-bordered table-striped mb-4">
+            <thead class="table text-center align-middle">
+                <tr>
+                    <th>Attendance ID</th>
+                    <th>Employee ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Records.Count == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">No approved leave attendance found.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var r in Model.Records)
+                    {
+                        <tr>
+                            <td>@r.AttendanceId</td>
+                            <td>@r.EmployeeId</td>
+                            <td>@r.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@r.Status</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <form method="post" class="text-center">
+            <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
+
+            <button class="btn btn-danger remove-rounded-btn">
+                Remove Approved Leaves
+            </button>
+        </form>
+    }
+
+    <div class="text-center bottom-back-btn">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>

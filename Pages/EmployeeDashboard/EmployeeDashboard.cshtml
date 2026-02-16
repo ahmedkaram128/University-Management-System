@@ -1,0 +1,68 @@
+﻿@page
+@model EmployeeDashboardModel
+@{
+    ViewData["Title"] = "Employee Dashboard";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">Employee Dashboard</div>
+
+    <div class="dashboard-grid">
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/SemesterPerformance")'">
+            <i class="fa-solid fa-chart-line"></i>
+            Semester Performance
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/CurrentMonthAttendance")'">
+            <i class="fa-solid fa-calendar-check"></i>
+            Current Month Attendance
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/LastMonthPayroll")'">
+            <i class="fa-solid fa-sack-dollar"></i>
+            Last Month Payroll
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/DeductionsAttendance")'">
+            <i class="fa-solid fa-scissors"></i>
+            Attendance Deductions
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/ApplyLeave")'">
+            <i class="fa-solid fa-plane-departure"></i>
+            Request a Leave
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/ApproveLeave")'">
+            <i class="fa-solid fa-envelope-open-text"></i>
+            Review Leave Requests
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/RequestStatus")'">
+            <i class="fa-solid fa-clipboard-list"></i>
+            My Leave Status
+        </button>
+
+        <button class="dashboard-button" onclick="location.href='@Url.Page("/EmployeeDashboard/EvaluateEmployee")'">
+            <i class="fa-solid fa-user-check"></i>
+            Evaluate an Employee
+        </button>
+
+    </div>
+
+
+    <div class="top-bar">
+        <form method="post" asp-page-handler="Logout">
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+        </form>
+    </div>
+
+</div>

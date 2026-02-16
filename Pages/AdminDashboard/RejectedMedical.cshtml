@@ -1,0 +1,58 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.RejectedMedicalModel
+@{
+    ViewData["Title"] = "Rejected Medical Leaves";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mt-4 mb-4">Rejected Medical Leaves</h2>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+
+    <table class="table table-bordered table-striped table-sm" style="width: 100%; text-align: center;">
+        <thead class="table text-center align-middle">
+        <tr>
+            <th>Request ID</th>
+            <th>Insurance Status</th>
+            <th>Disability Details</th>
+            <th>Type</th>
+            <th>Employee ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.rejectedMedicals.Count == 0)
+        {
+            <tr>
+                <td colspan="7" class="text-center">
+                    No rejected Medical leaves.
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var r in Model.rejectedMedicals)
+            {
+                <tr>
+                    <td>@r.Request_ID</td>
+                    <td>@(r.Insurance_status == true ? "Insured" : (r.Insurance_status == false ? "Not Insured" : "-"))</td>
+                    <td>@(r.Disability_details?? "-")</td>
+                    <td>@r.Type</td>
+                    <td>@(r.Emp_ID?.ToString()?? "-")</td>
+                </tr>
+            }
+        }
+    </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>

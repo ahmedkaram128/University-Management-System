@@ -1,0 +1,109 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        background: #ffffff;
+        font-family: "Segoe UI", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .policy-card {
+        width: 850px;
+        background: white;
+        padding: 45px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0px 20px 45px rgba(0,0,0,0.12);
+        animation: fadeIn 0.7s ease-out;
+    }
+
+    .policy-title {
+        font-size: 40px;
+        font-weight: 700;
+        color: #0d6efd;
+        margin-bottom: 15px;
+    }
+
+    .policy-text {
+        font-size: 18px;
+        color: #444;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .gif-row {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+
+    .gif-row img {
+        width: 280px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0px 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .back-btn {
+        margin-top: 35px;
+        background: #0d6efd;
+        color: white;
+        font-size: 18px;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: 0.3s ease;
+        font-weight: 600;
+    }
+
+    .back-btn:hover {
+        background: #0b57c6;
+        transform: translateY(-3px);
+        box-shadow: 0px 10px 25px rgba(13,110,253,0.25);
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(25px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="policy-card">
+
+    <div class="policy-title">Privacy Policy</div>    
+    <div class="policy-text">
+        <strong>Our privacy policy is simple:</strong> <br> 
+            👉 No hacking <br> 
+            👉 No breaking the system <br> 
+            👉 No SQL injection  <br> 
+    </div>
+
+    <div class="gif-row">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHptNnN6bGV0MTlrcnA5cW04NnJwY3pkcXk4MWVoM2FvdXZ3Y2p1NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/G0gQWdeRxefSJgBalK/giphy.gif">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmRjNnVhazJieGh5YWFibmg4bnFmZHlqNXh6amM2b280NnBhZTdycCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fvoFmNuMsI29Rt2GGN/giphy.gif" style="margin-left: 150px;">
+    </div>
+    <button class="back-btn" onclick="location.href='/Index'">
+        <i class="fa-solid fa-arrow-left"></i> Back to Login
+    </button>
+
+
+</div>

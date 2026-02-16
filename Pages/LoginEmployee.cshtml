@@ -1,0 +1,59 @@
+@page
+@model University_HR_ManagementSystem.Pages.LoginEmployeeModel
+@{
+    ViewData["Title"] = "Employee Login";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/login.css" />
+
+
+<div class="login-card">
+
+    <i class="fas fa-id-card login-icon"></i>
+    <div class="login-title">Employee Login</div>
+
+    <form method="post" novalidate>
+        <input type="hidden" asp-for="URL" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="ID" class="form-label">Employee ID</label>
+            <input asp-for="ID" class="form-control" placeholder="Enter your ID" />
+            <span asp-validation-for="ID" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 position-relative">
+            <label asp-for="Password" class="form-label">Password</label>
+            <input asp-for="Password" id="passwordField" type="password" class="form-control" placeholder="Enter password" />
+            <i id="toggleIcon" class="fa-solid fa-eye-slash toggle-password" onclick="togglePassword()"></i>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2">Login</button>
+    </form>
+
+    <a href="/Index" class="back-link">← Back to Home</a>
+</div>
+
+
+<script>
+    function togglePassword() {
+        let field = document.getElementById("passwordField");
+        let icon = document.getElementById("toggleIcon");
+
+        if (field.type === "password") {
+            field.type = "text";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        } else {
+            field.type = "password";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        }
+    }
+</script>
+
+<partial name="_ValidationScriptsPartial" />

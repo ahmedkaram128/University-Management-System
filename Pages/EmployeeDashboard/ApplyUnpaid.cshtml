@@ -1,0 +1,84 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.EmployeeDashboard.AcademicEmployee.ApplyUnpaidModel
+@{
+    ViewData["Title"] = "Apply Unpaid Leave";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="content-card">
+
+    <h2 class="dashboard-title">
+        <i class="fa-solid fa-wallet"></i> Apply Unpaid Leave
+    </h2>
+
+    <!-- Alerts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success fade-in text-center fw-semibold">
+            <i class="fa-solid fa-circle-check me-2"></i>@TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger fade-in text-center fw-semibold">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>@TempData["Error"]
+        </div>
+    }
+
+    <form method="post" class="leave-form">
+
+        <!-- Dates -->
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-calendar-day me-1"></i> Start Date
+                </label>
+                <input type="date" asp-for="StartDate" class="form-control form-control-lg" />
+                <span asp-validation-for="StartDate" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-calendar-check me-1"></i> End Date
+                </label>
+                <input type="date" asp-for="EndDate" class="form-control form-control-lg" />
+                <span asp-validation-for="EndDate" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <!-- Reason -->
+        <div class="mt-4">
+            <label class="form-label fw-bold">
+                <i class="fa-solid fa-file-lines me-1"></i> Reason / Document Description *
+            </label>
+            <input type="text" asp-for="DocumentDescription" class="form-control form-control-lg"
+                   placeholder="Example: Traveling / personal circumstances" />
+            <span asp-validation-for="DocumentDescription" class="text-danger small"></span>
+        </div>
+
+        <!-- File -->
+        <div class="mt-4">
+            <label class="form-label fw-bold">
+                <i class="fa-solid fa-file me-1"></i> File Name (Text) *
+            </label>
+            <input type="text" asp-for="FileName" class="form-control form-control-lg" placeholder="e.g. proof.pdf" />
+            <span asp-validation-for="FileName" class="text-danger small"></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-3 mt-5">
+
+            <button type="submit" class="btn btn-secondary fw-bold py-3">
+                <i class="fa-solid fa-paper-plane me-2"></i> Submit Unpaid Leave Request
+            </button>
+
+            <a asp-page="/EmployeeDashboard/ApplyLeave" class="btn-back">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Leave Types
+            </a>
+        </div>
+    </form>
+</div>

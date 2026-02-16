@@ -1,0 +1,150 @@
+@page
+@model University_HR_ManagementSystem.Pages.Employee.LastMonthPayrollModel
+@{
+    ViewData["Title"] = "Last Month Payroll";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .content-card {
+        width: 1000px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0px 20px 45px rgba(0,0,0,0.10);
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .payroll-section {
+        padding: 25px;
+        border-radius: 18px;
+        background: #f9faff;
+        border: 1px solid #e3e7ff;
+        margin-bottom: 30px;
+    }
+
+    .pay-field {
+        text-align: center;
+        flex: 1;
+        border-right: 1px solid #dee2f8;
+        padding: 10px;
+    }
+    .pay-field:last-child {
+        border-right: none;
+    }
+
+    .text-bonus {
+        color: #0c8b3c;
+        font-weight: bold;
+    }
+
+    .text-deduction {
+        color: #c22020;
+        font-weight: bold;
+    }
+
+    .btn-back {
+        background: #6c757d;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.25s ease;
+        color: white;
+    }
+
+    .btn-back:hover {
+        background: #555;
+        transform: translateY(-3px);
+        box-shadow: 0px 10px 22px rgba(0,0,0,0.15);
+    }
+</style>
+
+
+
+
+<div class="content-card">
+
+    <h2 class="dashboard-title mb-4">
+        <i class="fa-solid fa-file-invoice-dollar"></i> Last Month Payroll
+    </h2>
+
+    <!-- Summary Card -->
+    <div class="payroll-section d-flex justify-content-between align-items-center">
+
+        <div class="d-flex flex-grow-1">
+
+            <div class="pay-field">
+                <div class="fw-bold">Start</div>
+                <div>@Model.Payroll.StartDate</div>
+            </div>
+
+            <div class="pay-field">
+                <div class="fw-bold">End</div>
+                <div>@Model.Payroll.EndDate</div>
+            </div>
+
+            <div class="pay-field">
+                <div class="fw-bold">Payday</div>
+                <div>@Model.Payroll.PaymentDate</div>
+            </div>
+
+        </div>
+
+        <div class="text-end ps-4">
+            <div class="text-muted">Final Amount</div>
+            <h2 class="fw-bold" style="color:#0d6efd;">
+                $@Model.Payroll.FinalAmount
+            </h2>
+        </div>
+
+    </div>
+
+
+    <!-- Two Side Panels -->
+    <div class="row mt-4">
+
+        <!-- Comments -->
+        <div class="col-md-6">
+            <div class="payroll-section h-100">
+                <h5 class="fw-bold"><i class="fa-solid fa-message"></i> Comments</h5>
+                <p class="text-muted mt-2">@Model.Payroll.Comments</p>
+            </div>
+        </div>
+
+        <!-- Bonus & Deduction -->
+        <div class="col-md-6">
+            <div class="payroll-section h-100">
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="text-muted">Total Bonus Amount</div>
+                    <div class="fs-5 text-bonus">
+                        + $@Model.Payroll.BonusAmount
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted">Total Deductions</div>
+                    <div class="fs-5 text-deduction">
+                        - $@Model.Payroll.DeductionAmount
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a class="btn-back" href="/EmployeeDashboard/EmployeeDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>

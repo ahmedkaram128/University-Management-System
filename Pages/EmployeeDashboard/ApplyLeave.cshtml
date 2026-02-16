@@ -1,0 +1,250 @@
+﻿@page 
+@model University_HR_ManagementSystem.Pages.Employee.ApplyLeaveModel
+@{
+    ViewData["Title"] = "Leave Management";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<style>
+    .content-card {
+        width: 1000px;
+        background: white;
+        padding: 45px;
+        margin: 40px auto;
+        border-radius: 25px;
+        box-shadow: 0px 20px 45px rgba(0,0,0,0.10);
+        animation: fadeIn 0.5s ease-out;
+        text-align: center;
+    }
+
+    .leave-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .leave-card {
+        background: #f9f9f9;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.05);
+        transition: 0.25s ease;
+        cursor: pointer;
+    }
+
+    .leave-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 32px rgba(0,0,0,0.10);
+        background: #eef4ff;
+    }
+
+    .leave-card i {
+        font-size: 45px;
+        margin-bottom: 12px;
+        color: #0d6efd;
+    }
+
+    .leave-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        color: #0d6efd;
+    }
+
+    .leave-description {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 15px;
+        min-height: 40px;
+    }
+
+    .apply-btn {
+        background: #0d6efd;
+        border: none;
+        padding: 12px;
+        width: 100%;
+        border-radius: 10px;
+        font-weight: 600;
+        color: white;
+        transition: 0.25s;
+    }
+
+    .apply-btn:hover {
+        background: #084dbf;
+        transform: translateY(-3px);
+        box-shadow: 0px 10px 22px rgba(13,110,253,0.25);
+    }
+
+    .alert {
+        width: 80%;
+        margin: 10px auto;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+
+    .btn-back {
+        margin-top: 25px;
+        background: #6c757d;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        transition: 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-back:hover {
+        background: #555;
+        transform: translateY(-3px);
+        box-shadow: 0px 12px 25px rgba(0,0,0,0.15);
+    }
+    /* Base shared style */
+    .leave-card {
+        background: #f9f9f9;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.05);
+        transition: 0.25s ease;
+        cursor: pointer;
+        border: 3px solid transparent;
+    }
+
+    /* Hover Animation */
+    .leave-card:hover {
+        transform: translateY(-6px);
+    }
+
+    /* ----- CATEGORY COLORS ----- */
+
+    /* Annual = Blue */
+    .leave-card.annual {
+        border-color: #0d6efd33;
+        background: linear-gradient(145deg, #eef4ff, #ffffff);
+    }
+    .leave-card.annual:hover {
+        box-shadow: 0px 18px 32px rgba(13,110,253,0.25);
+    }
+    .leave-card.annual i { color: #0d6efd; }
+    .leave-card.annual .apply-btn { background: #0d6efd; }
+
+    /* Accidental = Yellow */
+    .leave-card.accidental {
+        border-color: #ffc10733;
+        background: linear-gradient(145deg, #fff8e5, #ffffff);
+    }
+    .leave-card.accidental:hover {
+        box-shadow: 0px 18px 32px rgba(255,193,7,0.25);
+    }
+    .leave-card.accidental i { color: #ffb300; }
+    .leave-card.accidental .apply-btn { background: #ffb300; }
+
+    /* Medical = Red */
+    .leave-card.medical {
+        border-color: #dc354533;
+        background: linear-gradient(145deg, #ffeaea, #ffffff);
+    }
+    .leave-card.medical:hover {
+        box-shadow: 0px 18px 32px rgba(220,53,69,0.25);
+    }
+    .leave-card.medical i { color: #dc3545; }
+    .leave-card.medical .apply-btn { background: #dc3545; }
+
+    /* Unpaid = Grey */
+    .leave-card.unpaid {
+        border-color: #6c757d33;
+        background: linear-gradient(145deg, #f2f2f2, #ffffff);
+    }
+    .leave-card.unpaid:hover {
+        box-shadow: 0px 18px 32px rgba(108,117,125,0.25);
+    }
+    .leave-card.unpaid i { color: #6c757d; }
+    .leave-card.unpaid .apply-btn { background: #6c757d; }
+
+    /* Compensation = Cyan */
+    .leave-card.compensation {
+        border-color: #17a2b833;
+        background: linear-gradient(145deg, #e5faff, #ffffff);
+    }
+    .leave-card.compensation:hover {
+        box-shadow: 0px 18px 32px rgba(23,162,184,0.25);
+    }
+    .leave-card.compensation i { color: #17a2b8; }
+    .leave-card.compensation .apply-btn { background: #17a2b8; }
+
+</style>
+
+
+
+<div class="content-card">
+
+    <h2 class="dashboard-title">
+        <i class="fa-solid fa-plane-departure"></i> Leave Management Portal
+    </h2>
+    <p class="text-muted">Select a leave type or manage existing requests.</p>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success fade-in">
+            <i class="fa-solid fa-circle-check"></i> @TempData["Success"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger fade-in">
+            <i class="fa-solid fa-triangle-exclamation"></i> @TempData["Error"]
+        </div>
+    }
+
+
+    <div class="leave-grid">
+
+        <div class="leave-card annual" onclick="location.href='ApplyAnnual'">
+            <i class="fa-solid fa-sun"></i>
+            <div class="leave-title">Annual Leave</div>
+            <div class="leave-description">Use your yearly paid leave.</div>
+            <button class="apply-btn">Apply Now</button>
+        </div>
+
+        <div class="leave-card accidental" onclick="location.href='ApplyAccidental'">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="leave-title">Accidental Leave</div>
+            <div class="leave-description">Emergency one-day absence.</div>
+            <button class="apply-btn">Apply Now</button>
+        </div>
+
+        <div class="leave-card medical" onclick="location.href='ApplyMedical'">
+            <i class="fa-solid fa-notes-medical"></i>
+            <div class="leave-title">Medical Leave</div>
+            <div class="leave-description">Sick or maternity leave.</div>
+            <button class="apply-btn">Apply Now</button>
+        </div>
+
+        <div class="leave-card unpaid" onclick="location.href='ApplyUnpaid'">
+            <i class="fa-solid fa-money-bill-wave"></i>
+            <div class="leave-title">Unpaid Leave</div>
+            <div class="leave-description">Leave without pay.</div>
+            <button class="apply-btn">Apply Now</button>
+        </div>
+
+        <div class="leave-card compensation" onclick="location.href='ApplyCompensation'">
+            <i class="fa-solid fa-handshake"></i>
+            <div class="leave-title">Compensation Leave</div>
+            <div class="leave-description">Redeem worked day-off hours.</div>
+            <button class="apply-btn">Apply Now</button>
+        </div>
+
+    </div>
+
+    <a class="btn-back" href="/EmployeeDashboard/EmployeeDashboard">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+</div>

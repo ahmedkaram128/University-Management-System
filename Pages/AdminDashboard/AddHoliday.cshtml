@@ -1,0 +1,114 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.AddHolidayModel
+@{
+    ViewData["Title"] = "Add Official Holiday";
+    Layout = "_MinLayout";
+}
+
+<style>
+    .error-box {
+        background-color: #ffe8e8;
+        padding: 16px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        color: #b10000;
+        font-size: 1.05rem;
+        font-weight: 500;
+    }
+
+    .message-box {
+        padding: 18px 22px;
+        border-radius: 10px;
+        font-size: 1.08rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    .msg-info {
+        background-color: #d9f5ff;
+        border-left: 6px solid #0d6efd;
+    }
+
+    .msg-warning {
+        background-color: #fff7d6;
+        border-left: 6px solid #ffc107;
+    }
+</style>
+
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mb-4">Add Official Holiday</h2>
+    </div>
+
+    @if (Model.Executed && Model.Success && ViewData["Updated"] == null)
+    {
+        <div class="message-box msg-info text-center">
+            Holiday <b>@Model.SuccessHolidayName</b> was added successfully.<br />
+            <b>
+                From: @Model.SuccessStartDate?.ToString("yyyy-MM-dd")
+                | To: @Model.SuccessEndDate?.ToString("yyyy-MM-dd")
+            </b>
+        </div>
+    }
+
+    @if (Model.Executed && Model.Success && ViewData["Updated"] != null)
+    {
+        <div class="message-box msg-warning text-center">
+            Holiday <b>@Model.SuccessHolidayName</b> was updated successfully.<br />
+            <b>
+                From: @Model.SuccessStartDate?.ToString("yyyy-MM-dd")
+                | To: @Model.SuccessEndDate?.ToString("yyyy-MM-dd")
+            </b>
+        </div>
+    }
+
+    @if (Model.Executed && !Model.Success)
+    {
+        <div class="error-box text-center">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <form method="post" class="mt-4">
+
+        <div class="row">
+            <div class="mb-3">
+                <label asp-for="Holiday.HolidayName" class="form-label fw-bold">Holiday Name</label>
+                <input asp-for="Holiday.HolidayName" class="form-control" />
+                <span asp-validation-for="Holiday.HolidayName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Holiday.FromDate" class="form-label fw-bold">From Date</label>
+                <input asp-for="Holiday.FromDate" type="date" class="form-control" />
+                <span asp-validation-for="Holiday.FromDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Holiday.ToDate" class="form-label fw-bold">To Date</label>
+                <input asp-for="Holiday.ToDate" type="date" class="form-control" />
+                <span asp-validation-for="Holiday.ToDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary mt-2 w-100">
+                Add Holiday
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

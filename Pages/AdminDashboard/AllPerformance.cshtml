@@ -1,0 +1,58 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.AllPerformanceModel
+@{
+    ViewData["Title"] = "Employee Performance";
+    Layout = "_MinLayout";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+    <div class="dashboard-title">
+        <h2 class="text-center mt-4 mb-4">Winter Semester Performance</h2>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+
+    <table class="table table-bordered table-striped" style="width: 100%; text-align: center;">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Performance ID</th>
+                <th>Rating</th>
+                <th>Comments</th>
+                <th>Semester</th>
+                <th>Employee ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.performances.Count == 0)
+            {
+                <tr>
+                    <td colspan="7" class="text-center">
+                        No Available Performances.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var p in Model.performances)
+                {
+                    <tr>
+                        <td>@p.Performance_ID</td>
+                        <td>@(p.Rating.ToString()?? "-")</td>
+                        <td>@(p.Comments?? "-")</td>
+                        <td>@p.Semester</td>
+                        <td>@(p.Emp_ID.ToString()?? "-")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>

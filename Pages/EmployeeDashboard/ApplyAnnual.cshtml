@@ -1,0 +1,81 @@
+﻿@page 
+@model University_HR_ManagementSystem.Pages.EmployeeDashboard.AcademicEmployee.ApplyAnnualModel
+@{
+    ViewData["Title"] = "Apply Annual Leave";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="content-card">
+
+    <!-- Title -->
+    <h2 class="dashboard-title">
+        <i class="fa-solid fa-calendar-days"></i> Apply Annual Leave
+    </h2>
+
+    <!-- Alerts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success fade-in text-center fw-semibold">
+            <i class="fa-solid fa-circle-check me-2"></i>@TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger fade-in text-center fw-semibold">
+            <i class="fa-solid fa-circle-xmark me-2"></i>@TempData["Error"]
+        </div>
+    }
+
+    <!-- Form -->
+    <form method="post" class="leave-form">
+
+        <div class="row g-4">
+
+            <!-- Start Date -->
+            <div class="col-md-6">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-calendar-plus me-1"></i> Start Date
+                </label>
+                <input type="date" asp-for="StartDate" class="form-control form-control-lg" />
+                <span asp-validation-for="StartDate" class="text-danger small"></span>
+            </div>
+
+            <!-- End Date -->
+            <div class="col-md-6">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-calendar-minus me-1"></i> End Date
+                </label>
+                <input type="date" asp-for="EndDate" class="form-control form-control-lg" />
+                <span asp-validation-for="EndDate" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <!-- Replacement -->
+        <div class="mt-4">
+            <label class="form-label fw-bold">
+                <i class="fa-solid fa-user-group me-1"></i> Replacement Employee ID
+            </label>
+            <input type="number" asp-for="ReplacementId" 
+                   class="form-control form-control-lg"
+                   placeholder="Enter ID of colleague covering you" required />
+            <span asp-validation-for="ReplacementId" class="text-danger small"></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-3 mt-5">
+            <button type="submit" class="btn btn-primary fw-bold py-3">
+                <i class="fa-solid fa-paper-plane me-2"></i> Submit Application
+            </button>
+
+            <a asp-page="/EmployeeDashboard/ApplyLeave" class="btn-back text-center">
+                <i class="fa-solid fa-chevron-left me-1"></i> Back to Leave Portal
+            </a>
+        </div>
+
+    </form>
+
+</div>

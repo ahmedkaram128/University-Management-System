@@ -1,0 +1,65 @@
+﻿@page
+@model University_HR_ManagementSystem.Pages.AdminDashboard.YesterdayAttendanceModel
+@{
+    ViewData["Title"] = "Yesterday Attendance";
+    Layout = "_MinLayout";
+}
+
+<link rel="stylesheet" href="~/css/dashboard.css" />
+
+<div class="dashboard-card">
+
+    <div class="dashboard-title">
+        <h2>Yesterday's Attendance</h2>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+
+    <table class="table table-bordered table-striped">
+        <thead class="table text-center align-middle">
+            <tr>
+                <th>Attendance ID</th>
+                <th>Employee ID</th>
+                <th>Date</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Total Minutes</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Records.Count == 0)
+            {
+                <tr>
+                    <td colspan="7" class="text-center">
+                        No attendance records for yesterday.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var r in Model.Records)
+                {
+                    <tr>
+                        <td>@r.AttendanceId</td>
+                        <td>@r.EmployeeId</td>
+                        <td>@r.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@(r.CheckInTime?.ToString() ?? "-")</td>
+                        <td>@(r.CheckOutTime?.ToString() ?? "-")</td>
+                        <td>@(r.TotalDuration?.ToString() ?? "-")</td>
+                        <td>@r.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="mt-4">
+        <a class="btn-back" href="/AdminDashboard/AdminDashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+</div>
